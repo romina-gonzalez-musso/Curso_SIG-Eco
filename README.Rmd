@@ -1,0 +1,34 @@
+---
+# title: 
+# author: 
+# date: 
+always_allow_html: true
+output:
+  github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE, out.width="75%", fig.cap="", fig.align="left"}
+
+knitr::include_graphics("mds/figures_mds/Portada.png")
+
+```
+------------------------------------------------------------------
+
+### DATOS ESPACIALES DE EJEMPLO
+Los datos vectoriales espaciales de este repositorio fueron tomados de la IDE del [Instituto Geográfico Nacional (IGN)](https://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/CapasSIG). 
+
+- [Vectoriales]()
+- [Proyecto_IGN_QGIS]()
+
+La imagen KMZ fue producida a partir de una imagen Sentinel 2A:
+
+- [Raster]()
+
+### CÓDIGOS GEE DE EJEMPLO
+
+- [Descarga de imagen Sentinel 2](..mds/1_Descarga_Sentinel2.md)
+- [Descarga de DEM](https://posgrado.crub.uncoma.edu.ar/?page_id=13)
