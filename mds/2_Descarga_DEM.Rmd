@@ -31,7 +31,7 @@ knitr::include_graphics("figures_mds/Figura_DEM_gif.gif")
 
 ### **2.Traer el asset del DEM**
 
-```{js asset, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
+```{javascript asset, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
 // --------- TRAER EL ASSET ---------------------------
 var DEM = ee.Image('USGS/SRTMGL1_003');
 

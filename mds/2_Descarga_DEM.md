@@ -19,18 +19,12 @@ elemento que digitalicemos llevará el nombre de `geometry`
 
 ### **2.Traer el asset del DEM**
 
-``` js
+``` javascript
 // --------- TRAER EL ASSET ---------------------------
 var DEM = ee.Image('USGS/SRTMGL1_003');
 
 var DEM_clip = DEM.clip(geometry) // cortar al área de estudio
 ```
-
-<script>
-// --------- TRAER EL ASSET ---------------------------
-var DEM = ee.Image('USGS/SRTMGL1_003');
-&#10;var DEM_clip = DEM.clip(geometry) // cortar al área de estudio
-&#10;</script>
 
 ### **3. Ver información de las imágenes**
 
