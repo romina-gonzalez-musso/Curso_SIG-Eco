@@ -31,7 +31,7 @@ knitr::include_graphics("figures_mds/Figura_S2_gif.gif")
 
 ### **2. Definir fecha de interés y traer la colección**
 
-```{js fechas, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
+```{js fechas}
 // --------- DEFINIR FECHA ----------------------------------------
 var date_start = '2023-01-01'
 var date_end = '2023-02-28'
@@ -52,7 +52,7 @@ var S2_image = S2_col.sort("CLOUDY_PIXEL_PERCENTAGE").first()
 
 En GEE, la solapa *consola* nos permite consultar y visualizar información sobre los productos. Para esto se usa la función `print()`
 
-```{js metadata, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
+```{js metadata}
 // Ver cantidad de imagenes en la coleccion
 print('Imagenes de la Coleccion', S2_col.size());   
 
@@ -100,7 +100,7 @@ knitr::include_graphics("figures_mds/Figura_S2_Bandas.png")
 
 **Configurar los parámetros de visualizacion y mostrar las imágenes**
 
-```{js visualizacion, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
+```{js visualizacion}
 // Configurar parámetros de visualización
 var visRGB = {min: -70, max: 1300, bands: ['B4', 'B3', 'B2'],};
 var visFALSECOLOR = {min: -200, max: 3900, bands: ["B8", "B4", "B3"],};
@@ -125,7 +125,7 @@ knitr::include_graphics("figures_mds/Figura_S2_visualizacion.png")
 
 En GEE la descarga de los productos o imágenes que generamos se hace a través de Google Drive. El primer paso es generar el *task* para exportar el objeto de interés. 
 
-```{js descarga, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
+```{js descarga}
 // ---------  DESCARGAR IMAGEN---------------------------
 Export.image.toDrive({
   image: S2_image.select("B8", "B4", "B3", "B2"),
