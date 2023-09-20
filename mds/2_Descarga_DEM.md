@@ -1,52 +1,35 @@
 
-## **DESCARGA DE IMAGEN INDIVIDUAL SENTINEL-2**
+## **DESCARGA DE IMAGEN DEM SRTM NASA (30m)**
 
-En este primer ejercicio buscaremos y descargaremos una imagen
-Sentinel-2. Las características generales de este *asset* (bandas,
-resolución, nivel de procesamiento) se pueden explorar en el siguiente
-[link](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED)
+Buscaremos el Modelo Digital de Elevación (DEM) generado a partir de la
+misión SRTM y producido por NASA. Las características generales de este
+*asset* se pueden explorar en el siguiente
+[link](https://developers.google.com/earth-engine/datasets/catalog/USGS_SRTMGL1_003)
 
-<img src="figures_mds/Figura_S2_asset.png" width="70%" style="display: block; margin: auto auto auto 0;" />
+<img src="figures_mds/Figura_DEM_asset.png" width="80%" style="display: block; margin: auto auto auto 0;" />
 
 ### **1. Definir un área de interés**
 
 Definiremos un área de interés usando la herramienta de digitalización
-del Code Editor. Puede ser un punto o un polígono. Por defecto y si no
-lo cambiamos, cualquier elemento que digitalicemos llevará el nombre de
-`geometry`
+del Code Editor. En este caso definiremos un polígono que usaremos luego
+para recortar el DEM. Por defecto y si no lo cambiamos, cualquier
+elemento que digitalicemos llevará el nombre de `geometry`
 
-<img src="figures_mds/Figura_S2_gif.gif" width="65%" style="display: block; margin: auto auto auto 0;" />
+<img src="figures_mds/Figura_DEM_gif.gif" width="65%" style="display: block; margin: auto auto auto 0;" />
 
-### **2. Definir fecha de interés y traer la colección**
+### **2.Traer el asset del DEM**
 
 ``` js
-// --------- DEFINIR FECHA ----------------------------------------
-var date_start = '2023-01-01'
-var date_end = '2023-02-28'
+// --------- TRAER EL ASSET ---------------------------
+var DEM = ee.Image('USGS/SRTMGL1_003');
 
-// --------- TRAER COLECCION DE IMAGENES ---------------------------
-var S2_col = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
-                  .filterDate(date_start, date_end)
-                  .filterBounds (geometry)
-                  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE',20))
-                  
-
-// Elegir la imagen de menor nubosidad de la coleccion
-var S2_image = S2_col.sort("CLOUDY_PIXEL_PERCENTAGE").first()
+var DEM_clip = DEM.clip(geometry) // cortar al área de estudio
 ```
 
 <script>
-// --------- DEFINIR FECHA ----------------------------------------
-var date_start = '2023-01-01'
-var date_end = '2023-02-28'
-&#10;// --------- TRAER COLECCION DE IMAGENES ---------------------------
-var S2_col = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
-                  .filterDate(date_start, date_end)
-                  .filterBounds (geometry)
-                  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE',20))
-                  &#10;
-// Elegir la imagen de menor nubosidad de la coleccion
-var S2_image = S2_col.sort("CLOUDY_PIXEL_PERCENTAGE").first()
+// --------- TRAER EL ASSET ---------------------------
+var DEM = ee.Image('USGS/SRTMGL1_003');
+&#10;var DEM_clip = DEM.clip(geometry) // cortar al área de estudio
 &#10;</script>
 
 ### **3. Ver información de las imágenes**
@@ -55,123 +38,132 @@ En GEE, la solapa *consola* nos permite consultar y visualizar
 información sobre los productos. Para esto se usa la función `print()`
 
 ``` js
-// Ver cantidad de imagenes en la coleccion
-print('Imagenes de la Coleccion', S2_col.size());   
+// --------- VER METADATOS ---------------------------
+print(DEM, 'DEM INFO GENERAL')
 
-// Metadatos de la imagen de menor nubosidad
-print(S2_image, 'Imagen con menor nubosidad')      
-
-// Fecha de la imagen
-print ('Fecha imagen seleccionada', ee.Date(S2_image.get('system:time_start')));  
-
-// % de nubes
-print ('% de nubes de la imagen', S2_image.get("CLOUDY_PIXEL_PERCENTAGE")); 
-
-// Ver info sobre resolucion espacial bandas R G B y NIR1 (B2, B3, B4, B8)
-var Res = (S2_image.select('B8').projection().nominalScale());
+var Res = (DEM.select('elevation').projection().nominalScale());
 print ('Resolucion (m)', Res);
+
+print('Bandas del DEM', DEM.bandNames())
 ```
 
 <script>
-// Ver cantidad de imagenes en la coleccion
-print('Imagenes de la Coleccion', S2_col.size());   
-&#10;// Metadatos de la imagen de menor nubosidad
-print(S2_image, 'Imagen con menor nubosidad')      
-&#10;// Fecha de la imagen
-print ('Fecha imagen seleccionada', ee.Date(S2_image.get('system:time_start')));  
-&#10;// % de nubes
-print ('% de nubes de la imagen', S2_image.get("CLOUDY_PIXEL_PERCENTAGE")); 
-&#10;// Ver info sobre resolucion espacial bandas R G B y NIR1 (B2, B3, B4, B8)
-var Res = (S2_image.select('B8').projection().nominalScale());
+// --------- VER METADATOS ---------------------------
+print(DEM, 'DEM INFO GENERAL')
+&#10;var Res = (DEM.select('elevation').projection().nominalScale());
 print ('Resolucion (m)', Res);
+&#10;print('Bandas del DEM', DEM.bandNames())
 &#10;
 </script>
 
-<img src="figures_mds/Figura_S2_metadata.png" width="73%" style="display: block; margin: auto auto auto 0;" />
+### **4. Operaciones básicas con DEM**
 
-### **4. Visualizar imagenes**
+En líneas generales, los modelos digitales de elevación constituyen una
+representación continua del relieve y la topografía del terreno. Cada
+píxel corresponde a la altitud en metros a una resolución determinada. A
+partir de esta información, es posible derivar otros atributos de
+terreno como puede ser la pendiente y la exposición. En GEE, como en
+cualquier software GIS, se pueden calcular estos productos.
 
-Los satélites capturan datos en distintas bandas del espectro
-electromagnético, cuyas combinaciones permiten resaltar distintos
-atributos de la cobertura terrestre. Las bandas pueden configurarse en
-los canales R-G-B (red-green-blue) para lograr combinaciones que
-resalten distintos atributos de interés, como ser vegetación, áreas
-urbanas, recursos hídricos, etc. Estas combinaciones producen imágenes
-denominadas *Falso Color*.
-
-En esta práctica usaremos dos combinaciones:
-
-- *Falso color infrarrojo*: buena sensibilidad para detectar y
-  discriminar vegetación por la alta reflectividad en el infrarrojo. El
-  canal R es reemplazado por la banda NIR, el G por la banda roja y el A
-  por la verde.
-
-- *Color verdadero*: las bandas visibles para el ojo humano produciendo
-  una imagen más similar al color natural. Se asigna la banda
-  correspondiente a cada canal: R (rojo), G (verde) y B (azul)
-
-La selección de bandas y el orden en que serán representadas dependen
-del sensor del satélite. En el caso de Sentinel-2, las bandas son las
-siguientes:
-
-<img src="figures_mds/Figura_S2_Bandas.png" width="55%" style="display: block; margin: auto auto auto 0;" />
-
-**Configurar los parámetros de visualizacion y mostrar las imágenes**
+**Método 1: pendiente con función `ee.Terrain.slope()`**
 
 ``` js
-// Configurar parámetros de visualización
-var visRGB = {min: -70, max: 1300, bands: ['B4', 'B3', 'B2'],};
-var visFALSECOLOR = {min: -200, max: 3900, bands: ["B8", "B4", "B3"],};
-
-
-// Agregar las imágenes
-Map.addLayer(S2_image, visRGB, 'RGB');
-Map.addLayer(S2_image, visFALSECOLOR, 'Falso Color IR');
-
-Map.centerObject(geometry, 9);
+// --------- CALCULAR LA PENDIENTE ---------------------------
+var elevacion = DEM_clip.select('elevation'); // En grados de 0 a 90
+var pendiente = ee.Terrain.slope(elevacion);
 ```
 
 <script>
-// Configurar parámetros de visualización
-var visRGB = {min: -70, max: 1300, bands: ['B4', 'B3', 'B2'],};
-var visFALSECOLOR = {min: -200, max: 3900, bands: ["B8", "B4", "B3"],};
-&#10;
-// Agregar las imágenes
-Map.addLayer(S2_image, visRGB, 'RGB');
-Map.addLayer(S2_image, visFALSECOLOR, 'Falso Color IR');
-&#10;Map.centerObject(geometry, 9);
+// --------- CALCULAR LA PENDIENTE ---------------------------
+var elevacion = DEM_clip.select('elevation'); // En grados de 0 a 90
+var pendiente = ee.Terrain.slope(elevacion);
 &#10;</script>
 
-<img src="figures_mds/Figura_S2_visualizacion.png" width="73%" style="display: block; margin: auto auto auto 0;" />
+**Método 2: productos topográficos con `ee.Terrain.products()`**
 
-### **5. Descargar imagen**
-
-En GEE la descarga de los productos o imágenes que generamos se hace a
-través de Google Drive. El primer paso es generar el *task* para
-exportar el objeto de interés.
+La función
+[`ee.Terrain.products`](https://developers.google.com/earth-engine/apidocs/ee-terrain-products)
+usa como input un DEM y produce una nueva imagen que además de contener
+la altitud (m) agrega 3 nuevas bandas: pendiente (º) y exposición (º) y
+un mapa de sombras.
 
 ``` js
-// ---------  DESCARGAR IMAGEN---------------------------
-Export.image.toDrive({
-  image: S2_image.select("B8", "B4", "B3", "B2"),
-  description: 'Sentinel2_20m',  // Nombre del archivo
-  scale: 20,
-  crs: 'EPSG:4326', 
-  folder: 'GEE_export'});  // Nombre de la carpeta en Google Drive
+// --------- USAR LA FUNCION ee.Terrain.products ---------------------------
+var terrain = ee.Terrain.products(DEM_clip);
+
+print('Bandas de la funcion ee.Terrain.products', terrain.bandNames());
 ```
 
 <script>
-// ---------  DESCARGAR IMAGEN---------------------------
+// --------- USAR LA FUNCION ee.Terrain.products ---------------------------
+var terrain = ee.Terrain.products(DEM_clip);
+&#10;print('Bandas de la funcion ee.Terrain.products', terrain.bandNames());
+&#10;</script>
+
+<img src="figures_mds/Figura_DEM_metadata.png" width="55%" style="display: block; margin: auto auto auto 0;" />
+
+### **5. Visualizar**
+
+``` js
+// --------- VISUALIZAR EN EL MAPA ---------------------------
+var visDEM = {min: 550, max: 2700,
+  palette: ['0602ff', '235cb1', '307ef3', '269db1', '30c8e2', '32d3ef', '3ae237',
+  'b5e22e', 'd6e21f', 'fff705', 'ffd611', 'ffb613', 'ff8b13', 'ff6e08',
+  'ff500d', 'ff0000', 'de0101', 'c21301']}
+
+
+Map.centerObject(geometry, 8.5)
+
+// Altidud en gris y en paleta de colores
+Map.addLayer(DEM_clip, {min: 600, max: 2500}, 'Altitud (m)');
+Map.addLayer(DEM_clip, visDEM, 'Altitud (m) en color');
+
+// Ver la pendiente 
+Map.addLayer(pendiente, {min: 0, max: 60}, 'Pendiente (º)');
+
+// Hillshade de la funcion Terrain Products
+Map.addLayer(terrain.select('hillshade'), {min: 0, max: 255}, 'Hillshade');
+```
+
+<script>
+// --------- VISUALIZAR EN EL MAPA ---------------------------
+var visDEM = {min: 550, max: 2700,
+  palette: ['0602ff', '235cb1', '307ef3', '269db1', '30c8e2', '32d3ef', '3ae237',
+  'b5e22e', 'd6e21f', 'fff705', 'ffd611', 'ffb613', 'ff8b13', 'ff6e08',
+  'ff500d', 'ff0000', 'de0101', 'c21301']}
+&#10;
+Map.centerObject(geometry, 8.5)
+&#10;// Altidud en gris y en paleta de colores
+Map.addLayer(DEM_clip, {min: 600, max: 2500}, 'Altitud (m)');
+Map.addLayer(DEM_clip, visDEM, 'Altitud (m) en color');
+&#10;// Ver la pendiente 
+Map.addLayer(pendiente, {min: 0, max: 60}, 'Pendiente (º)');
+&#10;// Hillshade de la funcion Terrain Products
+Map.addLayer(terrain.select('hillshade'), {min: 0, max: 255}, 'Hillshade');
+&#10;</script>
+
+<img src="figures_mds/Figura_DEM_gif2.gif" width="55%" style="display: block; margin: auto auto auto 0;" />
+
+### **6. Descargar**
+
+``` js
+// --------- DESCARGAR ---------------------------------------
 Export.image.toDrive({
-  image: S2_image.select("B8", "B4", "B3", "B2"),
-  description: 'Sentinel2_20m',  // Nombre del archivo
-  scale: 20,
-  crs: 'EPSG:4326', 
-  folder: 'GEE_export'});  // Nombre de la carpeta en Google Drive
-</script>
+  image: DEM_clip.select("elevation"),
+  description: 'DEM_SRTM_30m',
+  scale: 30,
+  crs: 'EPSG:22181',
+  folder: 'GEE_export',
+  region: geometry});
+```
 
-En la solapa *Tasks* aparece la opción para iniciar la exportación a
-Google Drive. Simplemente hay que hacer click en *Run*. El tiempo de
-espera dependerá del tamaño del producto a exportar.
-
-<img src="figures_mds/Figura_S2_task.png" width="55%" style="display: block; margin: auto auto auto 0;" />
+<script>
+// --------- DESCARGAR ---------------------------------------
+Export.image.toDrive({
+  image: DEM_clip.select("elevation"),
+  description: 'DEM_SRTM_30m',
+  scale: 30,
+  crs: 'EPSG:22181',
+  folder: 'GEE_export',
+  region: geometry});
+&#10;</script>
