@@ -43,7 +43,7 @@ var DEM_clip = DEM.clip(geometry) // cortar al área de estudio
 
 En GEE, la solapa *consola* nos permite consultar y visualizar información sobre los productos. Para esto se usa la función `print()`
 
-```{js metadata, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
+```{javascript metadata, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
 // --------- VER METADATOS ---------------------------
 print(DEM, 'DEM INFO GENERAL')
 
@@ -63,7 +63,7 @@ En líneas generales, los modelos digitales de elevación constituyen una repres
 
 **Método 1: pendiente con función `ee.Terrain.slope()`**
 
-```{js calculo1, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
+```{javascript calculo1, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
 // --------- CALCULAR LA PENDIENTE ---------------------------
 var elevacion = DEM_clip.select('elevation'); // En grados de 0 a 90
 var pendiente = ee.Terrain.slope(elevacion);
@@ -74,7 +74,7 @@ var pendiente = ee.Terrain.slope(elevacion);
 
 La función [`ee.Terrain.products`](https://developers.google.com/earth-engine/apidocs/ee-terrain-products) usa como input un DEM y produce una nueva imagen que además de contener la altitud (m) agrega 3 nuevas bandas: pendiente (º) y exposición (º) y un mapa de sombras. 
 
-```{js calculo2, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
+```{javascript calculo2, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
 // --------- USAR LA FUNCION ee.Terrain.products ---------------------------
 var terrain = ee.Terrain.products(DEM_clip);
 
@@ -91,7 +91,7 @@ knitr::include_graphics("figures_mds/Figura_DEM_metadata.png")
 
 ### **5. Visualizar**
 
-```{js vis, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
+```{javascript vis, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
 // --------- VISUALIZAR EN EL MAPA ---------------------------
 var visDEM = {min: 550, max: 2700,
   palette: ['0602ff', '235cb1', '307ef3', '269db1', '30c8e2', '32d3ef', '3ae237',
@@ -120,7 +120,7 @@ knitr::include_graphics("figures_mds/Figura_DEM_gif2.gif")
 ```
 
 ### **6. Descargar**
-```{js descargar, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
+```{javascript descargar, message=FALSE, warning=FALSE, paged.print=FALSE, results = FALSE}
 // --------- DESCARGAR ---------------------------------------
 Export.image.toDrive({
   image: DEM_clip.select("elevation"),

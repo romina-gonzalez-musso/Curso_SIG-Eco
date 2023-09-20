@@ -37,7 +37,7 @@ var DEM = ee.Image('USGS/SRTMGL1_003');
 En GEE, la solapa *consola* nos permite consultar y visualizar
 información sobre los productos. Para esto se usa la función `print()`
 
-``` js
+``` javascript
 // --------- VER METADATOS ---------------------------
 print(DEM, 'DEM INFO GENERAL')
 
@@ -46,15 +46,6 @@ print ('Resolucion (m)', Res);
 
 print('Bandas del DEM', DEM.bandNames())
 ```
-
-<script>
-// --------- VER METADATOS ---------------------------
-print(DEM, 'DEM INFO GENERAL')
-&#10;var Res = (DEM.select('elevation').projection().nominalScale());
-print ('Resolucion (m)', Res);
-&#10;print('Bandas del DEM', DEM.bandNames())
-&#10;
-</script>
 
 ### **4. Operaciones básicas con DEM**
 
@@ -67,17 +58,11 @@ cualquier software GIS, se pueden calcular estos productos.
 
 **Método 1: pendiente con función `ee.Terrain.slope()`**
 
-``` js
+``` javascript
 // --------- CALCULAR LA PENDIENTE ---------------------------
 var elevacion = DEM_clip.select('elevation'); // En grados de 0 a 90
 var pendiente = ee.Terrain.slope(elevacion);
 ```
-
-<script>
-// --------- CALCULAR LA PENDIENTE ---------------------------
-var elevacion = DEM_clip.select('elevation'); // En grados de 0 a 90
-var pendiente = ee.Terrain.slope(elevacion);
-&#10;</script>
 
 **Método 2: productos topográficos con `ee.Terrain.products()`**
 
@@ -87,24 +72,18 @@ usa como input un DEM y produce una nueva imagen que además de contener
 la altitud (m) agrega 3 nuevas bandas: pendiente (º) y exposición (º) y
 un mapa de sombras.
 
-``` js
+``` javascript
 // --------- USAR LA FUNCION ee.Terrain.products ---------------------------
 var terrain = ee.Terrain.products(DEM_clip);
 
 print('Bandas de la funcion ee.Terrain.products', terrain.bandNames());
 ```
 
-<script>
-// --------- USAR LA FUNCION ee.Terrain.products ---------------------------
-var terrain = ee.Terrain.products(DEM_clip);
-&#10;print('Bandas de la funcion ee.Terrain.products', terrain.bandNames());
-&#10;</script>
-
 <img src="figures_mds/Figura_DEM_metadata.png" width="55%" style="display: block; margin: auto auto auto 0;" />
 
 ### **5. Visualizar**
 
-``` js
+``` javascript
 // --------- VISUALIZAR EN EL MAPA ---------------------------
 var visDEM = {min: 550, max: 2700,
   palette: ['0602ff', '235cb1', '307ef3', '269db1', '30c8e2', '32d3ef', '3ae237',
@@ -125,28 +104,11 @@ Map.addLayer(pendiente, {min: 0, max: 60}, 'Pendiente (º)');
 Map.addLayer(terrain.select('hillshade'), {min: 0, max: 255}, 'Hillshade');
 ```
 
-<script>
-// --------- VISUALIZAR EN EL MAPA ---------------------------
-var visDEM = {min: 550, max: 2700,
-  palette: ['0602ff', '235cb1', '307ef3', '269db1', '30c8e2', '32d3ef', '3ae237',
-  'b5e22e', 'd6e21f', 'fff705', 'ffd611', 'ffb613', 'ff8b13', 'ff6e08',
-  'ff500d', 'ff0000', 'de0101', 'c21301']}
-&#10;
-Map.centerObject(geometry, 8.5)
-&#10;// Altidud en gris y en paleta de colores
-Map.addLayer(DEM_clip, {min: 600, max: 2500}, 'Altitud (m)');
-Map.addLayer(DEM_clip, visDEM, 'Altitud (m) en color');
-&#10;// Ver la pendiente 
-Map.addLayer(pendiente, {min: 0, max: 60}, 'Pendiente (º)');
-&#10;// Hillshade de la funcion Terrain Products
-Map.addLayer(terrain.select('hillshade'), {min: 0, max: 255}, 'Hillshade');
-&#10;</script>
-
 <img src="figures_mds/Figura_DEM_gif2.gif" width="55%" style="display: block; margin: auto auto auto 0;" />
 
 ### **6. Descargar**
 
-``` js
+``` javascript
 // --------- DESCARGAR ---------------------------------------
 Export.image.toDrive({
   image: DEM_clip.select("elevation"),
@@ -156,14 +118,3 @@ Export.image.toDrive({
   folder: 'GEE_export',
   region: geometry});
 ```
-
-<script>
-// --------- DESCARGAR ---------------------------------------
-Export.image.toDrive({
-  image: DEM_clip.select("elevation"),
-  description: 'DEM_SRTM_30m',
-  scale: 30,
-  crs: 'EPSG:22181',
-  folder: 'GEE_export',
-  region: geometry});
-&#10;</script>

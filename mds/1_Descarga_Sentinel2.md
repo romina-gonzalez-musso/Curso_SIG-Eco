@@ -19,7 +19,7 @@ lo cambiamos, cualquier elemento que digitalicemos llevará el nombre de
 
 ### **2. Definir fecha de interés y traer la colección**
 
-``` js
+``` javascript
 // --------- DEFINIR FECHA ----------------------------------------
 var date_start = '2023-01-01'
 var date_end = '2023-02-28'
@@ -35,26 +35,12 @@ var S2_col = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
 var S2_image = S2_col.sort("CLOUDY_PIXEL_PERCENTAGE").first()
 ```
 
-<script>
-// --------- DEFINIR FECHA ----------------------------------------
-var date_start = '2023-01-01'
-var date_end = '2023-02-28'
-&#10;// --------- TRAER COLECCION DE IMAGENES ---------------------------
-var S2_col = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
-                  .filterDate(date_start, date_end)
-                  .filterBounds (geometry)
-                  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE',20))
-                  &#10;
-// Elegir la imagen de menor nubosidad de la coleccion
-var S2_image = S2_col.sort("CLOUDY_PIXEL_PERCENTAGE").first()
-&#10;</script>
-
 ### **3. Ver información de las imágenes**
 
 En GEE, la solapa *consola* nos permite consultar y visualizar
 información sobre los productos. Para esto se usa la función `print()`
 
-``` js
+``` javascript
 // Ver cantidad de imagenes en la coleccion
 print('Imagenes de la Coleccion', S2_col.size());   
 
@@ -71,21 +57,6 @@ print ('% de nubes de la imagen', S2_image.get("CLOUDY_PIXEL_PERCENTAGE"));
 var Res = (S2_image.select('B8').projection().nominalScale());
 print ('Resolucion (m)', Res);
 ```
-
-<script>
-// Ver cantidad de imagenes en la coleccion
-print('Imagenes de la Coleccion', S2_col.size());   
-&#10;// Metadatos de la imagen de menor nubosidad
-print(S2_image, 'Imagen con menor nubosidad')      
-&#10;// Fecha de la imagen
-print ('Fecha imagen seleccionada', ee.Date(S2_image.get('system:time_start')));  
-&#10;// % de nubes
-print ('% de nubes de la imagen', S2_image.get("CLOUDY_PIXEL_PERCENTAGE")); 
-&#10;// Ver info sobre resolucion espacial bandas R G B y NIR1 (B2, B3, B4, B8)
-var Res = (S2_image.select('B8').projection().nominalScale());
-print ('Resolucion (m)', Res);
-&#10;
-</script>
 
 <img src="figures_mds/Figura_S2_metadata.png" width="73%" style="display: block; margin: auto auto auto 0;" />
 
@@ -118,7 +89,7 @@ siguientes:
 
 **Configurar los parámetros de visualizacion y mostrar las imágenes**
 
-``` js
+``` javascript
 // Configurar parámetros de visualización
 var visRGB = {min: -70, max: 1300, bands: ['B4', 'B3', 'B2'],};
 var visFALSECOLOR = {min: -200, max: 3900, bands: ["B8", "B4", "B3"],};
@@ -131,17 +102,6 @@ Map.addLayer(S2_image, visFALSECOLOR, 'Falso Color IR');
 Map.centerObject(geometry, 9);
 ```
 
-<script>
-// Configurar parámetros de visualización
-var visRGB = {min: -70, max: 1300, bands: ['B4', 'B3', 'B2'],};
-var visFALSECOLOR = {min: -200, max: 3900, bands: ["B8", "B4", "B3"],};
-&#10;
-// Agregar las imágenes
-Map.addLayer(S2_image, visRGB, 'RGB');
-Map.addLayer(S2_image, visFALSECOLOR, 'Falso Color IR');
-&#10;Map.centerObject(geometry, 9);
-&#10;</script>
-
 <img src="figures_mds/Figura_S2_visualizacion.png" width="73%" style="display: block; margin: auto auto auto 0;" />
 
 ### **5. Descargar imagen**
@@ -150,7 +110,7 @@ En GEE la descarga de los productos o imágenes que generamos se hace a
 través de Google Drive. El primer paso es generar el *task* para
 exportar el objeto de interés.
 
-``` js
+``` javascript
 // ---------  DESCARGAR IMAGEN---------------------------
 Export.image.toDrive({
   image: S2_image.select("B8", "B4", "B3", "B2"),
@@ -159,16 +119,6 @@ Export.image.toDrive({
   crs: 'EPSG:4326', 
   folder: 'GEE_export'});  // Nombre de la carpeta en Google Drive
 ```
-
-<script>
-// ---------  DESCARGAR IMAGEN---------------------------
-Export.image.toDrive({
-  image: S2_image.select("B8", "B4", "B3", "B2"),
-  description: 'Sentinel2_20m',  // Nombre del archivo
-  scale: 20,
-  crs: 'EPSG:4326', 
-  folder: 'GEE_export'});  // Nombre de la carpeta en Google Drive
-</script>
 
 En la solapa *Tasks* aparece la opción para iniciar la exportación a
 Google Drive. Simplemente hay que hacer click en *Run*. El tiempo de
