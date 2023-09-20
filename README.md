@@ -1,7 +1,7 @@
 
-## <img src="mds/figures_mds/Portada.png" width="75%" style="display: block; margin: auto auto auto 0;" />
+## <img src="mds/figures_mds/Portada.png" width="75%" style="display: block; margin: auto;" />
 
-### CÓDIGOS GEE DE EJEMPLO
+### **CÓDIGOS GOOGLE EARTH ENGINE DE EJEMPLO**
 
 - [Descarga de imagen Sentinel
   2](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco_2023/blob/main/mds/1_Descarga_Sentinel2.md)
