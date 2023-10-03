@@ -8,4 +8,4 @@
 - [Descarga de
   DEM](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco_2023/blob/main/mds/2_Descarga_DEM.md)
 - [Landsat 8
-  Composite](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco_2023/blob/main/mds/2_Descarga_DEM.md)
+  Composite](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco_2023/blob/main/mds/3_Descarga_LANDSAT8_composite-pansharp.md)
