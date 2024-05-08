@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r, echo=FALSE, out.width="75%", fig.cap="", fig.align="center"}
 
-knitr::include_graphics("mds/figures_mds/Portada.png")
+knitr::include_graphics("mds/figures_mds/Portada_repo.png")
 
 ```
 ------------------------------------------------------------------

@@ -1,5 +1,5 @@
 
-## <img src="mds/figures_mds/Portada.png" width="75%" style="display: block; margin: auto;" />
+## <img src="mds/figures_mds/Portada_repo.png" width="75%" style="display: block; margin: auto;" />
 
 ### **CÓDIGOS GOOGLE EARTH ENGINE DE EJEMPLO**
 
