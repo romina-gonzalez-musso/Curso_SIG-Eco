@@ -11,4 +11,4 @@
   Composite](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco_2023/blob/main/mds/3_Descarga_LANDSAT8_composite-pansharp.md)
 - [OpenBuildings-v3](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco_2023/blob/main/mds/Descarga_open_buildingsv3.js)
 - [NDVI Serie temporal para un sitio puntual con
-  Landsat8](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco_2023/blob/main/mds/Descarga_open_buildingsv3.js)
+  Landsat8](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/NDVI_Serie_temporal_Landsat8.js)
