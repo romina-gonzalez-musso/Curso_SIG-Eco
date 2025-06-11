@@ -21,3 +21,4 @@
   Temperature](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Landsat_SurfaceTemperature.js)
 - [Extraer serie de datos NDVI de Landsat usando shapefile
   (asset)](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Landsat_NDVI_desde_shape_puntos.js)
+- [Descargar NDVI de composite L8 y L9]()
