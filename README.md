@@ -1,5 +1,5 @@
 
-## <img src="mds/figures_mds/Portada_repo.png" width="75%" style="display: block; margin: auto;" />
+## <img src="mds/figures_mds/Portada_repo.png" alt="" width="75%" style="display: block; margin: auto;" />
 
 ### **CÓDIGOS GOOGLE EARTH ENGINE DE EJEMPLO**
 
@@ -23,3 +23,13 @@
   (asset)](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Landsat_NDVI_desde_shape_puntos.js)
 - [Descargar NDVI de composite
   L8](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Composite_Landsat_con_NDVI.js)
+- [Global Forest Change (Hansen et al. versión
+  2025)](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Hansen_GlobalForestChange.js)
+
+#### **APPS INTERACTIVAS BASADAS EN GOOGLE EARTH ENGINE:**
+
+- [Global Forest Change - GLAD
+  Maryland](https://glad.earthengine.app/view/global-forest-change#bl=off;old=off;dl=1;lon=-41.50579389700618;lat=-39.51557340343385;zoom=3;)
+
+- [Incendios forestales
+  Patagonia](https://ee-gonzalezmusso-conicet.projects.earthengine.app/view/severidad-incendios-patagonia)
