@@ -1,7 +1,6 @@
 // ============================================================
 // ÍNDICES DE VEGETACIÓN Y AGUA - LANDSAT 8 Y 9
 // Índices: NDVI, SAVI, EVI, MNDWI
-// Colecciones: LANDSAT/LC08/C02/T1_L2 | LANDSAT/LC09/C02/T1_L2
 // ============================================================
 
 // Definir que el baselayer sea el Google Satellite -----------------------
@@ -33,9 +32,7 @@ function applyScaleFactors(image) {
 // Cálculo de índices espectrales -----------------------------------------
 
 // NDVI – Normalized Difference Vegetation Index
-// Rango: -1 a 1 | Vegetación densa > 0.5
 // NDVI = (NIR - Red) / (NIR + Red)
-// Landsat 8/9: NIR = B5, Red = B4
 function addNDVI(image) {
   var ndvi = image.normalizedDifference(['SR_B5', 'SR_B4'])
                   .rename('NDVI');
@@ -59,7 +56,6 @@ function addSAVI(image) {
 // EVI – Enhanced Vegetation Index
 // Más robusto que NDVI en zonas de alta biomasa y con aerosoles
 // EVI = 2.5 * (NIR - Red) / (NIR + 6*Red - 7.5*Blue + 1)
-// Landsat 8/9: NIR = B5, Red = B4, Blue = B2
 function addEVI(image) {
   var nir  = image.select('SR_B5');
   var red  = image.select('SR_B4');
@@ -76,7 +72,6 @@ function addEVI(image) {
 // MNDWI – Modified Normalized Difference Water Index
 // Resalta cuerpos de agua y suprime vegetación y suelo
 // MNDWI = (Green - SWIR1) / (Green + SWIR1)
-// Landsat 8/9: Green = B3, SWIR1 = B6
 function addMNDWI(image) {
   var mndwi = image.normalizedDifference(['SR_B3', 'SR_B6'])
                    .rename('MNDWI');

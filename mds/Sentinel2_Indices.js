@@ -1,7 +1,6 @@
 // ============================================================
 // ÍNDICES DE VEGETACIÓN Y AGUA - SENTINEL-2
 // Índices: NDVI, SAVI, EVI, MNDWI
-// Colección: COPERNICUS/S2_SR_HARMONIZED
 // ============================================================
 
 // Definir que el baselayer sea el Google Satellite -----------------------
@@ -25,7 +24,6 @@ function cloudMaskS2(image) {
 }
 
 // Factores de escala para bandas ópticas (Surface Reflectance) -----------
-// Sentinel-2 C02 SR: reflectancia = DN / 10000
 function applyScaleFactors(image) {
   var opticalBands = image.select('B.*').divide(10000);
   return image.addBands(opticalBands, null, true);
@@ -34,9 +32,8 @@ function applyScaleFactors(image) {
 // Cálculo de índices espectrales -----------------------------------------
 
 // NDVI – Normalized Difference Vegetation Index
-// Rango: -1 a 1 | Vegetación densa > 0.5
 // NDVI = (NIR - Red) / (NIR + Red)
-// Sentinel-2: NIR = B8, Red = B4
+
 function addNDVI(image) {
   var ndvi = image.normalizedDifference(['B8', 'B4'])
                   .rename('NDVI');
@@ -46,7 +43,6 @@ function addNDVI(image) {
 // SAVI – Soil Adjusted Vegetation Index
 // Reduce el efecto del suelo desnudo en áreas de baja cobertura vegetal
 // SAVI = ((NIR - Red) / (NIR + Red + L)) * (1 + L)   → L = 0.5
-// Sentinel-2: NIR = B8, Red = B4
 function addSAVI(image) {
   var L    = 0.5;
   var nir  = image.select('B8');
@@ -61,7 +57,6 @@ function addSAVI(image) {
 // EVI – Enhanced Vegetation Index
 // Más robusto que NDVI en zonas de alta biomasa y con aerosoles
 // EVI = 2.5 * (NIR - Red) / (NIR + 6*Red - 7.5*Blue + 1)
-// Sentinel-2: NIR = B8, Red = B4, Blue = B2
 function addEVI(image) {
   var nir  = image.select('B8');
   var red  = image.select('B4');
@@ -78,7 +73,6 @@ function addEVI(image) {
 // MNDWI – Modified Normalized Difference Water Index
 // Resalta cuerpos de agua y suprime vegetación y suelo
 // MNDWI = (Green - SWIR1) / (Green + SWIR1)
-// Sentinel-2: Green = B3, SWIR1 = B11
 function addMNDWI(image) {
   var mndwi = image.normalizedDifference(['B3', 'B11'])
                    .rename('MNDWI');
@@ -87,7 +81,6 @@ function addMNDWI(image) {
 
 // Llamar a la colección de Sentinel-2 ------------------------------------
 // SR_HARMONIZED: reflectancia de superficie, colección armonizada
-// Bandas ópticas necesarias + SCL para la máscara de nubes
 var bandsS2 = ['B2', 'B3', 'B4', 'B8', 'B11', 'SCL'];
 
 var S2 = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
