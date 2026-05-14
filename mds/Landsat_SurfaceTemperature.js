@@ -61,3 +61,11 @@ var visST = {
   ]}
 
 Map.addLayer(LandsatST, visST, 'Surface Temperature');
+
+// Descargar -----------------------------------------------------
+Export.image.toDrive({
+  image: LandsatST,
+  description: 'Landsat_ST',  // Nombre del archivo
+  scale: 30,
+  crs: 'EPSG:4326', 
+  folder: 'GEE_export'});  // Nombre de la carpeta en Google Drive

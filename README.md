@@ -14,17 +14,26 @@
 
 #### **SOLO CÓDIGO:**
 
+##### **PRODUCTOS A PARTIR DE ÁREAS (POLÍGONOS):**
+
 - [OpenBuildings-v3](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco_2023/blob/main/mds/Descarga_open_buildingsv3.js)
-- [NDVI Serie temporal para un sitio puntual con
-  Landsat8](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/NDVI_Serie_temporal_Landsat8.js)
+
 - [Landsat Surface
   Temperature](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Landsat_SurfaceTemperature.js)
-- [Extraer serie de datos NDVI de Landsat usando shapefile
-  (asset)](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Landsat_NDVI_desde_shape_puntos.js)
+
 - [Descargar NDVI de composite
   L8](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Composite_Landsat_con_NDVI.js)
+
 - [Global Forest Change (Hansen et al. versión
   2025)](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Hansen_GlobalForestChange.js)
+
+##### **SERIES A PARTIR DE PUNTOS (exporta tablas):**
+
+- [NDVI Serie temporal para un sitio puntual con
+  Landsat8](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/NDVI_Serie_temporal_Landsat8.js)
+
+- [Extraer serie de datos NDVI de Landsat usando shapefile
+  (asset)](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Landsat_NDVI_desde_shape_puntos.js)
 
 #### **APPS INTERACTIVAS BASADAS EN GOOGLE EARTH ENGINE:**
 
