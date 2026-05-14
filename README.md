@@ -28,7 +28,7 @@
   2025)](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Hansen_GlobalForestChange.js)
 
 - [Composite de índices - LANDSAT 8 Y
-  9)](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Landsat89_Indices.js)
+  9](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Landsat89_Indices.js)
 
 - [Composite de índices - SENTINEL
   2](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Sentinel2_Indices.js)
