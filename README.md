@@ -41,6 +41,9 @@
 - [Extraer serie de datos NDVI de Landsat usando shapefile
   (asset)](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Landsat_NDVI_desde_shape_puntos.js)
 
+- [Landsat serie de temperatura a partir de
+  puntos](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Landsat_SurfaceTemperature_pointSeries.js)
+
 #### **APPS INTERACTIVAS BASADAS EN GOOGLE EARTH ENGINE:**
 
 - [Global Forest Change - GLAD
