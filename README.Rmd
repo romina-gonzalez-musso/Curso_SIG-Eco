@@ -46,9 +46,9 @@ knitr::include_graphics("mds/figures_mds/Portada_repo.png")
 
 - [Landsat serie de temperatura a partir de puntos](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Landsat_SurfaceTemperature_pointSeries.js)
 
-##### **EJEMPLO DE CLASIFICACIONES:**
+##### **CLASIFICACIONES DE COBERTURA (ejemplos simples):**
 
-- [Random Forest sencillo para 3 clases de cobertura]()
+- [Random Forest sencillo para 3 clases de cobertura](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Clasificacion_RF.js)
 
 #### **APPS INTERACTIVAS BASADAS EN GOOGLE EARTH ENGINE:**
 - [Global Forest Change - GLAD Maryland](https://glad.earthengine.app/view/global-forest-change#bl=off;old=off;dl=1;lon=-41.50579389700618;lat=-39.51557340343385;zoom=3;)
