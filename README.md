@@ -44,6 +44,10 @@
 - [Landsat serie de temperatura a partir de
   puntos](https://github.com/romina-gonzalez-musso/Curso_SIG-Eco/blob/main/mds/Landsat_SurfaceTemperature_pointSeries.js)
 
+##### **EJEMPLO DE CLASIFICACIONES:**
+
+- [Random Forest sencillo para 3 clases de cobertura]()
+
 #### **APPS INTERACTIVAS BASADAS EN GOOGLE EARTH ENGINE:**
 
 - [Global Forest Change - GLAD
